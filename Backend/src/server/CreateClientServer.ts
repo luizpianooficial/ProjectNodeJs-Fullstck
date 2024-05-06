@@ -1,27 +1,26 @@
 import prismaCliente from "../prisma";
 
-
 interface CreateClientPros {
     name: string;
     email: string;
-    dataNacimento: string;
+    nascimento: string;
+    password: string;
 }
 
 class CreateClienteServer {
-    static async execute({ name, email, dataNacimento }: CreateClientPros) {
+    static async execute({ name, email, nascimento, password }: CreateClientPros) {
 
-        if (!name || !email || !dataNacimento) {
+        if (!name || !email || !nascimento || !password) {
             throw new Error("PREENCHA TODOS OS CAMPOS");
         }
 
         const Client = await prismaCliente.custome.create({
-
             data: {
                 name,
                 email,
-                dataNacimento: new Date(dataNacimento).toISOString(), 
+                nascimento,
+                password
             }
-
         });
 
         return Client;
